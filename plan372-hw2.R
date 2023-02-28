@@ -51,5 +51,51 @@ facility = group_by(data, FACILITYTYPE) %>%
   summarize(
     SCORE=mean(SCORE)
   )
-    
+
+# Filtering the data (Q7)
+restaurant_data = filter(data, FACILITYTYPE == "Restaurant")
+
+# Histogram of restaurants (Q7)
+ggplot(restaurant_data, aes(x=SCORE)) +
+  geom_histogram(bins = 50) 
+
+
+# Plot of scores over time for restaurants (Q7)
+ggplot(restaurant_data, aes(x=DATE_, y=SCORE)) +
+  geom_col()
+
+# Looking at how cities are written differently (Q7)
+# No need to recode city names
+unique(restaurant_data$CITY)
+
+# Grouping restaurant data by city, averaging the inspection scores for each (Q7)
+restaurant_data_cities = group_by(restaurant_data, CITY) %>%
+  summarize(
+    SCORE=mean(SCORE)
+  )
+
+# Grouping restaurant data by inspector (Q7)
+restaurant_data_inspectors = group_by(restaurant_data, INSPECTOR) %>%
+  summarize(
+    SCORE=mean(SCORE)
+  )
+
+# Sample size per city (Q7)
+restaurant_data_cities_samplesize = group_by(restaurant_data, CITY) %>%
+  summarize(
+    SampleSize=n()
+  )
+
+# Sample size per inspector (Q7)
+restaurant_data_inspectors_samplesize = group_by(restaurant_data, INSPECTOR) %>%
+  summarize(
+    SampleSize=n()
+  )
+
+
+
+
+
+
+
 
