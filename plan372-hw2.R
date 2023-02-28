@@ -9,9 +9,14 @@ ggplot(data, aes(x=SCORE)) +
 min(data$SCORE)
 which(data$SCORE == 0)
 
-# Plot of scores over time, showing that newer restaurants have higher scores
+# Plot of scores over time
 # Q2
-ggplot(data, aes(x=DATE_, y=SCORE)) +
+
+# Finding average score for each date first
+data_years = group_by(data, DATE_) %>%
+  summarize(SCORE=mean(SCORE))
+# Then plotting with that data
+ggplot(data_years, aes(x=DATE_, y=SCORE)) +
   geom_col()
 
 # Looking at how cities are written differently (Q3)
@@ -64,8 +69,13 @@ ggplot(restaurant_data, aes(x=SCORE)) +
 
 
 # Plot of scores over time for restaurants (Q7)
-ggplot(restaurant_data, aes(x=DATE_, y=SCORE)) +
+# Finding average score for each date
+restaurant_data_years = group_by(restaurant_data, DATE_) %>%
+  summarize(SCORE=mean(SCORE))
+
+ggplot(restaurant_data_years, aes(x=DATE_, y=SCORE)) +
   geom_col()
+
 
 # Looking at how cities are written differently (Q7)
 unique(restaurant_data$CITY)
