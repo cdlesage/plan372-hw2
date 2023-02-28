@@ -45,3 +45,11 @@ inspectors_samplesize = group_by(data, INSPECTOR) %>%
   summarize(
     SampleSize=n()
   )
+
+# Grouping data by facility with average scores for each (Q6)
+facility = group_by(data, FACILITYTYPE) %>%
+  summarize(
+    SCORE=mean(SCORE)
+  )
+    
+
