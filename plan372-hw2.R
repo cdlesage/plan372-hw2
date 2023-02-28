@@ -34,4 +34,14 @@ inspectors = group_by(data, INSPECTOR) %>%
     SCORE=mean(SCORE)
   )
 
+# Sample size per city (Q5)
+cities_samplesize = group_by(data, CITY) %>%
+  summarize(
+    SampleSize=n()
+  )
 
+# Sample size per inspector (Q5)
+inspectors_samplesize = group_by(data, INSPECTOR) %>%
+  summarize(
+    SampleSize=n()
+  )
