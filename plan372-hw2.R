@@ -19,7 +19,7 @@ unique(data$CITY)
 
 # Recoding city names (Q3)
 data$CITY = recode(data$CITY, "Raleigh"="RALEIGH", "FUQUAY-VARINA"="FUQUAY VARINA", "Fuquay Varina"="FUQUAY VARINA", "Fuquay-Varina"="FUQUAY VARINA",
-                               "Apex"="APEX", "Zebulon"="ZEBULON", "Holly Springs"="HOLLY SPRINGS", "HOLLY SPRING"="HOLLY SPRINGS", "Cary"="CARY", "Morrisville"="MORRISVILLE", "MORRISVILE"="MORRISVILLE", "Garner"="GARNER")
+                               "Apex"="APEX", "Zebulon"="ZEBULON", "Holly Springs"="HOLLY SPRINGS", "HOLLY SPRING"="HOLLY SPRINGS", "Cary"="CARY", "Morrisville"="MORRISVILLE", "MORRISVILE"="MORRISVILLE", "Garner"="GARNER", "Wake Forest"="WAKE FOREST")
 
 # Grouping data by city, averaging the inspection scores for each (Q3)
 cities = group_by(data, CITY) %>%
@@ -52,6 +52,9 @@ facility = group_by(data, FACILITYTYPE) %>%
     SCORE=mean(SCORE)
   )
 
+sum(is.na(data$FACILITYTYPE))
+
+
 # Filtering the data (Q7)
 restaurant_data = filter(data, FACILITYTYPE == "Restaurant")
 
@@ -65,8 +68,11 @@ ggplot(restaurant_data, aes(x=DATE_, y=SCORE)) +
   geom_col()
 
 # Looking at how cities are written differently (Q7)
-# No need to recode city names
 unique(restaurant_data$CITY)
+
+# Recoding RTP acronym
+data$CITY = recode(restaurant_data$CITY, "RTP"="RESEARCH TRIANGLE PARK")
+
 
 # Grouping restaurant data by city, averaging the inspection scores for each (Q7)
 restaurant_data_cities = group_by(restaurant_data, CITY) %>%
